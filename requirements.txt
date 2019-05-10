@@ -1,0 +1,9 @@
+Flask
+pandas
+# issues with installing the latest version of psycopg2
+psycopg2==2.7.5
+SQLAlchemy
+gunicorn
+
+# test dependencies
+pytest
