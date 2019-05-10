@@ -29,6 +29,5 @@ def get_req():
     return response
 
 
-
 if __name__ == "__main__":
     app.run()
