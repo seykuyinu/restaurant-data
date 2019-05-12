@@ -15,7 +15,6 @@ def transform_data(df: pd.DataFrame):
     return df
 
 def write_df_to_db(engine, df:pd.DataFrame, model):
-    # if table already exists?
     try:
         Base.metadata.create_all(engine)
 
@@ -71,7 +70,6 @@ def main():
         transformed_data_tmp = transform_data(chunk)
         transformed_restaurant_data = transformed_restaurant_data.append(transformed_data_tmp)
 
-    
     print('Processing the data..')
     restaurant_info_df, inspection_info_df = process(transformed_restaurant_data)
   
