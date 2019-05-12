@@ -1,7 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Date, Float, Text, ForeignKey
-# TODO!
-# from config import restaurant_table_name, inspection_table_name
 
 Base = declarative_base()
 
@@ -12,8 +10,8 @@ class RestaurantInfo(Base):
     borough = Column(String(255))
     building = Column(String(255))
     street = Column(String(255))
-    zipcode = Column(String(10))
-    phone = Column(String(15))
+    zipcode = Column(String(20))
+    phone = Column(String(50))
     cuisine = Column(String(255))
     
 
@@ -26,7 +24,7 @@ class InspectionInfo(Base):
     violation_desc = Column(Text)
     critical_flag = Column(String(255))
     score = Column(Float)
-    grade = Column(String(1))
+    grade = Column(String(255))
     grade_date = Column(Date)
     record_date = Column(Date)
     inspection_type = Column(String(255))
