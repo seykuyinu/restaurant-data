@@ -14,3 +14,4 @@ COLUMN_RENAME_MAPPING = {
         "RECORD DATE" : "record_date",
         "INSPECTION TYPE" : "inspection_type"
 }
+CSV_FILENAME = 'DOHMH_New_York_City_Restaurant_Inspection_Results.csv'

@@ -2,7 +2,7 @@ import pandas as pd
 import os 
 from sqlalchemy import create_engine
 from models import Base, RestaurantInfo, InspectionInfo
-from variables import REST_INFO_COLUMNS, DATE_COLUMNS, NEW_YORK_DIAL_CODE, COLUMN_RENAME_MAPPING
+from variables import REST_INFO_COLUMNS, DATE_COLUMNS, NEW_YORK_DIAL_CODE, COLUMN_RENAME_MAPPING, CSV_FILENAME
 
 def transform_data(df: pd.DataFrame):
     df.rename(columns=COLUMN_RENAME_MAPPING, inplace=True)
@@ -63,7 +63,7 @@ def process(restaurant_data: pd.DataFrame):
 def main():
     transformed_restaurant_data = pd.DataFrame()
     chunksize = 1000
-    path = os.path.join('..', 'DOHMH_New_York_City_Restaurant_Inspection_Results.csv')
+    path = os.path.join(CSV_FILENAME)
 
     print('Reading csv file..')
     restaurant_data = pd.read_csv(path, dtype={'PHONE': object}, chunksize=chunksize)
