@@ -6,7 +6,7 @@
 https://sey-restaurant-data.herokuapp.com/restaurants
 
 ### File list:
-* [DB Schema]()
+* [DB Schema Explanation](schema.md)
 * [ETL Job](etl/etl_job.py)
 * [API Code](api.py)
 * [SQL Query](queries.sql)
@@ -14,7 +14,7 @@ https://sey-restaurant-data.herokuapp.com/restaurants
 
 ## Local Setup
 
-Python version 3.6+
+Python version 3.6+ - Recommend using a [virtual environment](https://docs.python-guide.org/dev/virtualenvs/)
 
 ```pip install -r requirements.txt etl/requirements.txt```
 
@@ -36,6 +36,8 @@ From the root directory, run:
 ```bash
 bash start_app.sh
 ```
+
+API endpoint will be: localhost:5000/restaurants
 
 ### Run unit tests
 ```bash
