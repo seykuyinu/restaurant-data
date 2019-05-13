@@ -25,11 +25,5 @@ class DBRestaurantQuery:
         self.query = self.query + f" {cuisine_query}"
         return self
         
-    # TODO: get working!
-    # @property
-    # def query(self):
-    #     return self.query
-
-    # @query.setter
-    # def query(self, query):
-    #     self.query = query
+    def get_query(self):
+       return self.query

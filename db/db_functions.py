@@ -11,13 +11,13 @@ def get_restaurant_by_ratings(ratings: list = all_ratings, cuisine:str=None):
     try:
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         session = conn.cursor(cursor_factory = DictCursor)
-
+        
         db_query = DBRestaurantQuery().get_restaurants().with_ratings_filter(ratings)
 
         if cuisine:
             db_query.with_cuisine_filter(cuisine)
 
-        session.execute(db_query.query)
+        session.execute(db_query.get_query())
         results = session.fetchall()
 
         desc = session.description

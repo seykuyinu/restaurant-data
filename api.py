@@ -11,9 +11,11 @@ app = Flask(__name__)
 def get_req():
     cuisine = request.args.get(CUISINE_KEY)
     ratings = request.args.getlist(RATINGS_KEY)
-
     try:
-        results = get_restaurant_by_ratings(ratings, cuisine=cuisine)
+        if ratings:
+            results = get_restaurant_by_ratings(ratings, cuisine=cuisine)
+        else:
+            results = get_restaurant_by_ratings(cuisine=cuisine)
         response = jsonify(results)
     except Exception as e:
         app.logger.error(f"Error getting restaurant information: {e}")
