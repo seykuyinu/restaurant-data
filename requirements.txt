@@ -1,0 +1,7 @@
+Flask
+# issues with installing the latest version of psycopg2
+psycopg2==2.7.5
+gunicorn
+
+# test dependencies
+pytest
