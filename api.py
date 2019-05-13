@@ -1,15 +1,11 @@
 from flask import Flask, request, jsonify, Response
-from restaurants.db_functions import get_restaurant_by_ratings
+from db.db_functions import get_restaurant_by_ratings
 import logging
 
 CUISINE_KEY = 'cuisine'
 RATINGS_KEY = 'rating'
 
 app = Flask(__name__)
-
-logger = logging.getLogger()
-
-# add logging
 
 @app.route('/restaurants', methods=['GET'])
 def get_req():
@@ -18,12 +14,9 @@ def get_req():
 
     try:
         results = get_restaurant_by_ratings(ratings, cuisine=cuisine)
-        print(results)
-        logger.info(f"Results: {results}")
-        # response = Response(jsonify(results), status=200, mimetype='application/json')
         response = jsonify(results)
     except Exception as e:
-        logger.exception("Error")
+        app.logger.error(f"Error getting restaurant information: {e}")
         response = Response(status=400, mimetype='application/json')
     
     return response
