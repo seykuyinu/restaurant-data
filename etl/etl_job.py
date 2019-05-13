@@ -2,7 +2,8 @@ import pandas as pd
 import os 
 from sqlalchemy import create_engine
 from models import Base, RestaurantInfo, InspectionInfo
-from variables import REST_INFO_COLUMNS, DATE_COLUMNS, NEW_YORK_DIAL_CODE, COLUMN_RENAME_MAPPING, CSV_FILENAME
+from variables import REST_INFO_COLUMNS, INSPECITON_INFO_COLUMNS, DATE_COLUMNS, NEW_YORK_DIAL_CODE, COLUMN_RENAME_MAPPING, CSV_FILENAME, DATABASE_URL
+import io
 
 def transform_data(df: pd.DataFrame):
     df.rename(columns=COLUMN_RENAME_MAPPING, inplace=True)
@@ -18,8 +19,15 @@ def write_df_to_db(engine, df:pd.DataFrame, model):
     try:
         Base.metadata.create_all(engine)
 
-        df.to_sql(name=model.__tablename__, con=engine, if_exists='append', index=False, chunksize=1000)
-    
+        conn = engine.raw_connection()
+        cur = conn.cursor()
+        output = io.StringIO()
+        df.to_csv(output, sep='\t', header=False, index=False)
+        output.seek(0)
+        cur.copy_from(output, model.__tablename__, null="") # null values become ''
+        conn.commit()
+        conn.close()
+
     except Exception:
         raise
 
@@ -72,13 +80,15 @@ def main():
 
     print('Processing the data..')
     restaurant_info_df, inspection_info_df = process(transformed_restaurant_data)
-  
-    # TODO: get str from config
-    engine = create_engine('postgres+psycopg2://seykuyinu@localhost:5432/seykuyinu')
+
+    # arrange columns
+    restaurant_info_df = restaurant_info_df[REST_INFO_COLUMNS]
+    inspection_info_df = inspection_info_df[INSPECITON_INFO_COLUMNS]
+
+    engine = create_engine(DATABASE_URL)
     print('Writing dataframes to database.. ')
     write_df_to_db(engine, restaurant_info_df, RestaurantInfo)
     write_df_to_db(engine, inspection_info_df, InspectionInfo)
-
     
 if __name__ == "__main__":
     main()
